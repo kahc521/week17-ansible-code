@@ -1,0 +1,25 @@
+---
+- hosts: db
+  become: yes
+  ignore_errors: yes
+  gather_facts: 1
+  vars:
+    color: red
+  tasks:
+    - name: check number of cpu
+      command: uptime
+      register: ansible_processor_nproc_output
+    - name:
+      debug:
+       var: ansible_processor_nproc_output.stdout
+
+    - name: create file
+      file:
+        path: /home/ec2-user/week3
+        state: touch
+        mode: '644'
+      register: file_output
+
+    - name: display output
+      debug:
+        var: color
